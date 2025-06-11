@@ -41,6 +41,6 @@ public class Cart {
     private Customer customer;
 
 
-    //hiber set?
+
     private Set<CartItem> cartItems;
 }
