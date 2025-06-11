@@ -31,4 +31,8 @@ public class Customer {
     private Date last_update;
     private Division division;
     private Set<Cart> carts;
+
+    public Long getCustomerId() {
+        return id;
+    }
 }

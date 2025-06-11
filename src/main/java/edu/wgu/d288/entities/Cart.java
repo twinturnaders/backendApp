@@ -43,4 +43,8 @@ public class Cart {
 
 
     private Set<CartItem> cartItems;
+
+    public Long getCartId() {
+       return id;
+    }
 }
