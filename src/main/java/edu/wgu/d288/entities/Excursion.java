@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
@@ -45,7 +45,7 @@ public class Excursion {
     private Vacation vacation;
 
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "excursion_id", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "excursions", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<CartItem> cartItems = new HashSet<>();
 
 }

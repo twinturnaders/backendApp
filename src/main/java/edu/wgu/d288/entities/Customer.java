@@ -10,7 +10,7 @@ import lombok.Setter;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
@@ -49,7 +49,7 @@ public class Customer {
     @JoinColumn(name = "division_id")
     private Division division;
 
-    @OneToMany(mappedBy = "customer_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Cart> carts = new HashSet<>();
 
     public Long getCustomerId() {

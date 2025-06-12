@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
@@ -51,7 +52,7 @@ public class Cart {
 
 
 
-    @OneToMany(mappedBy = "cart_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     private Set<CartItem> cartItems = new HashSet<>();
 
     public Long getCartId() {

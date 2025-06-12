@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
@@ -44,7 +44,7 @@ public class Vacation {
     @Column(name = "last_update")
     private Date last_update;
 
-    @OneToMany(mappedBy = "vacation_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "vacation", cascade = CascadeType.ALL)
     private Set<Excursion> excursions = new HashSet<>();
 
 }

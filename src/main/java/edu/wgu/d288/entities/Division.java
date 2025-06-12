@@ -10,7 +10,7 @@ import lombok.Setter;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
@@ -36,6 +36,6 @@ public class Division {
     @JoinColumn(name = "country_id")
     private Country country;
 
-    @OneToMany(mappedBy = "division_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "division", cascade = CascadeType.ALL)
     private Set<Customer> customers = new HashSet<>();
 }
