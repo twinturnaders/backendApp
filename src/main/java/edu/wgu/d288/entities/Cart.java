@@ -1,6 +1,6 @@
 package edu.wgu.d288.entities;
 
-
+//
 import jakarta.persistence.*;
 import jakarta.transaction.Status;
 import lombok.AllArgsConstructor;
