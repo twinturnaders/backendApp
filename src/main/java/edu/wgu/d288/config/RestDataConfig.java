@@ -1,6 +1,8 @@
 package edu.wgu.d288.config;
 
 import edu.wgu.d288.entities.*;
+import edu.wgu.d288.services.Purchase;
+import edu.wgu.d288.services.PurchaseResponse;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
@@ -39,6 +41,8 @@ public class RestDataConfig implements RepositoryRestConfigurer {
         config.exposeIdsFor(Division.class);
         config.exposeIdsFor(Excursion.class);
         config.exposeIdsFor(Vacation.class);
+        config.exposeIdsFor(PurchaseResponse.class);
+        config.exposeIdsFor(Purchase.class);
         config.setDefaultPageSize(Integer.MAX_VALUE);
         config.setMaxPageSize(Integer.MAX_VALUE);
 

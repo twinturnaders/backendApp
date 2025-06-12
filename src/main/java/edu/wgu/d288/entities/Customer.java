@@ -30,10 +30,10 @@ public class Customer {
     private Date create_date;
 
     @Column(name = "customer_first_name")
-    private String first_name;
+    private String firstName;
 
     @Column(name = "customer_last_name")
-    private String last_name;
+    private String lastName;
 
     @Column(name = "last_update")
     private Date last_update;
@@ -51,6 +51,18 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Cart> carts = new HashSet<>();
+
+    public Customer(Long id, String address, Date create_date, String firstName, String lastName, Date last_update, String postal_code, String phone, Set<Cart> carts) {
+        this.id = id;
+        this.address = address;
+        this.create_date = create_date;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.last_update = last_update;
+        this.postal_code = postal_code;
+        this.phone = phone;
+        this.carts = carts;
+    }
 
     public Long getCustomerId() {
         return id;

@@ -24,29 +24,40 @@ public class CheckoutServiceImpl implements CheckoutService {
     @Override
     @Transactional
     public PurchaseResponse placeOrder(Purchase purchase) {
+        Cart cart;
+        Long cartId = purchase.getCart().getCartId();
 
-        Cart cart = purchase.getCart();
+        if (cartId != null) {
 
-        String order_tracking_number = generateTrackingNumber();
-        cart.setOrderTrackingNumber(order_tracking_number);
+            cart = cartRepository.findById(cartId)
+                    .orElseThrow(() -> new RuntimeException("Cart not found: " + cartId));
+        } else {
 
-        Set<CartItem> CartItemSet = purchase.getCartItems();
-        for (CartItem item : CartItemSet) {
-            item.setCart(cart);
+            cart = new Cart();
         }
-        cart.setCartItems(CartItemSet);
 
-        Customer customer = purchase.getCustomer();
+        String orderTrackingNumber = UUID.randomUUID().toString();
+        cart.setOrderTrackingNumber(orderTrackingNumber);
+
+        Set<CartItem> cartItems = purchase.getCartItems();
+        if (cartItems != null) {
+            for (CartItem item : cartItems) {
+                item.setCart(cart);
+            }
+            cart.setCartItems(cartItems);
+        }
+
+        Long custId = purchase.getCustomer().getCustomerId();
+        Customer customer = customerRepository.findById(custId)
+                .orElseThrow(() -> new RuntimeException("Customer not found: " + custId));
         cart.setCustomer(customer);
-
         customer.getCarts().add(cart);
 
-        customerRepository.save(customer);
 
-        return new PurchaseResponse(order_tracking_number);
+        cartRepository.save(cart);
+
+        return new PurchaseResponse(orderTrackingNumber);
     }
 
-    private String generateTrackingNumber() {
-        return UUID.randomUUID().toString();
-    }
+
 }

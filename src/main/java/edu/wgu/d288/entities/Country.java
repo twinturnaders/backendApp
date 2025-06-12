@@ -32,4 +32,6 @@ public class Country {
 
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
     private Set<Division> divisions = new HashSet<>();
+
+
 }
