@@ -21,7 +21,7 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
-    private Long id;
+    private Long customer_id;
 
     @Column(name = "address")
     private String address;
@@ -52,8 +52,8 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Cart> carts = new HashSet<>();
 
-    public Customer(Long id, String address, Date create_date, String firstName, String lastName, Date last_update, String postal_code, String phone, Set<Cart> carts) {
-        this.id = id;
+    public Customer(Long customer_id, String address, Date create_date, String firstName, String lastName, Date last_update, String postal_code, String phone, Set<Cart> carts) {
+        this.customer_id = customer_id;
         this.address = address;
         this.create_date = create_date;
         this.firstName = firstName;
@@ -65,6 +65,6 @@ public class Customer {
     }
 
     public Long getCustomerId() {
-        return id;
+        return customer_id;
     }
 }

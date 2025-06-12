@@ -22,7 +22,7 @@ public class Vacation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "vacation_id")
-    private Long id;
+    private Long vacation_id;
 
     @Column(name = "vacation_title")
     private String vacation_title;

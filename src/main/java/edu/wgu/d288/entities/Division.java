@@ -20,10 +20,10 @@ public class Division {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "division_id")
-    private Long id;
+    private Long division_id;
 
     @Column(name = "division")
-    private String divisionName;
+    private String division_name;
 
 
     @Column(name = "create_date")

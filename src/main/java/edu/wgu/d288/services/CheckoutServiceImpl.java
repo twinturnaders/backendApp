@@ -25,12 +25,12 @@ public class CheckoutServiceImpl implements CheckoutService {
     @Transactional
     public PurchaseResponse placeOrder(Purchase purchase) {
         Cart cart;
-        Long cartId = purchase.getCart().getCartId();
+        Long cart_id = purchase.getCart().getCart_id();
 
-        if (cartId != null) {
+        if (cart_id != null) {
 
-            cart = cartRepository.findById(cartId)
-                    .orElseThrow(() -> new RuntimeException("Cart not found: " + cartId));
+            cart = cartRepository.findById(cart_id)
+                    .orElseThrow(() -> new RuntimeException("Cart not found: " + cart_id));
         } else {
 
             cart = new Cart();
@@ -47,9 +47,9 @@ public class CheckoutServiceImpl implements CheckoutService {
             cart.setCartItems(cartItems);
         }
 
-        Long custId = purchase.getCustomer().getCustomerId();
-        Customer customer = customerRepository.findById(custId)
-                .orElseThrow(() -> new RuntimeException("Customer not found: " + custId));
+        Long customer_id = purchase.getCustomer().getCustomer_id();
+        Customer customer = customerRepository.findById(customer_id)
+                .orElseThrow(() -> new RuntimeException("Customer not found: " + customer_id));
         cart.setCustomer(customer);
         customer.getCarts().add(cart);
 

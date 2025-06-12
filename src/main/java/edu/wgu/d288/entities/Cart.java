@@ -2,7 +2,6 @@ package edu.wgu.d288.entities;
 
 //
 import jakarta.persistence.*;
-import jakarta.transaction.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +22,7 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "cart_id")
-    private Long id;
+    private Long cart_id;
 
 
 
@@ -56,6 +55,6 @@ public class Cart {
     private Set<CartItem> cartItems = new HashSet<>();
 
     public Long getCartId() {
-       return id;
+       return cart_id;
     }
 }
