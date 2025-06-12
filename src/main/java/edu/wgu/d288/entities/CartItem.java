@@ -23,9 +23,9 @@ public class CartItem {
     @Column(name = "cart_item_id")
     private Long id;
 
-    @Column(name="")
+    @Column(name="create_date")
     private Date create_date;
-    @Column(name="")
+    @Column(name="last_update")
     private Date last_update;
 
     @ManyToOne
