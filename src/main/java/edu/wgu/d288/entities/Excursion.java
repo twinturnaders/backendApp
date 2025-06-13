@@ -21,7 +21,7 @@ public class Excursion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "excursion_id")
-    private Long excursion_id;
+    private Long id;
 
     @Column(name = "excursion_title")
     private String excursion_title;

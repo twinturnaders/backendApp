@@ -19,9 +19,9 @@ import java.util.Set;
 
 public class CartItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_item_id")
-    private Long cart_item_id;
+    private Long id;
 
     @Column(name="create_date")
     private Date create_date;

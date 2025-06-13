@@ -15,49 +15,53 @@ import java.util.UUID;
 @Service
 public class CheckoutServiceImpl implements CheckoutService {
 
-    @Autowired
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
+    private final CartRepository cartRepository;
 
     @Autowired
-    private CartRepository cartRepository;
+    public CheckoutServiceImpl(CustomerRepository customerRepository,
+                               CartRepository cartRepository) {
+        this.customerRepository = customerRepository;
+        this.cartRepository = cartRepository;
+    }
 
     @Override
     @Transactional
     public PurchaseResponse placeOrder(Purchase purchase) {
-        Cart cart;
-        Long cart_id = purchase.getCart().getCart_id();
+        //check for existing cart: else new
+        Cart incoming = purchase.getCart();
+        Cart cart = (incoming != null
+                && incoming.getCartId() != null
+                && incoming.getCartId() != 0L)
+                ? cartRepository.findById(incoming.getCartId())
+                .orElseGet(Cart::new)
+                : new Cart();
 
-        if (cart_id != null) {
-
-            cart = cartRepository.findById(cart_id)
-                    .orElseThrow(() -> new RuntimeException("Cart not found: " + cart_id));
-        } else {
-
-            cart = new Cart();
-        }
-
+        //create tracking string
         String orderTrackingNumber = UUID.randomUUID().toString();
         cart.setOrderTrackingNumber(orderTrackingNumber);
 
-        Set<CartItem> cartItems = purchase.getCartItems();
-        if (cartItems != null) {
-            for (CartItem item : cartItems) {
-                item.setCart(cart);
-            }
-            cart.setCartItems(cartItems);
+        // attach items to cart
+        Set<CartItem> items = purchase.getCartItems();
+        if (items != null && !items.isEmpty()) {
+            items.forEach(item -> item.setCart(cart));
+            cart.setCartItems(items);
         }
 
-        Long customer_id = purchase.getCustomer().getCustomer_id();
-        Customer customer = customerRepository.findById(customer_id)
-                .orElseThrow(() -> new RuntimeException("Customer not found: " + customer_id));
+        // check for existing customer :else save new
+        Customer incomingCust = purchase.getCustomer();
+        Customer customer = customerRepository
+                .findById(incomingCust.getCustomerId())
+                .orElseGet(() -> customerRepository.save(incomingCust));
+
+        //add customer to cart and cart to customer
         cart.setCustomer(customer);
         customer.getCarts().add(cart);
 
-
+        //persist car
         cartRepository.save(cart);
 
+        //return order number
         return new PurchaseResponse(orderTrackingNumber);
     }
-
-
 }

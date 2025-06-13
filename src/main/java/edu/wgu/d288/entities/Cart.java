@@ -20,9 +20,9 @@ import java.util.Set;
 @Table(name = "carts")
 public class Cart {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id")
-    private Long cart_id;
+    private Long id;
 
 
 
@@ -55,6 +55,6 @@ public class Cart {
     private Set<CartItem> cartItems = new HashSet<>();
 
     public Long getCartId() {
-       return cart_id;
+       return id;
     }
 }

@@ -17,9 +17,9 @@ import java.util.Set;
 @Table(name = "countries")
 public class Country {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "country_id")
-    private Long country_id;
+    private Long id;
 
     @Column(name="country")
     private String country_name;

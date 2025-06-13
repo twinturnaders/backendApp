@@ -20,9 +20,9 @@ import java.util.Set;
 @Table(name = "vacations")
 public class Vacation {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "vacation_id")
-    private Long vacation_id;
+    private Long id;
 
     @Column(name = "vacation_title")
     private String vacation_title;

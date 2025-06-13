@@ -18,9 +18,9 @@ import java.util.Set;
 @Table(name = "divisions")
 public class Division {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "division_id")
-    private Long division_id;
+    private Long id;
 
     @Column(name = "division")
     private String division_name;
