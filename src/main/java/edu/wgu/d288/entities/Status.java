@@ -1,6 +1,6 @@
 package edu.wgu.d288.entities;
 
-public enum StatusType {
+public enum Status {
     pending,
     ordered,
     cancelled

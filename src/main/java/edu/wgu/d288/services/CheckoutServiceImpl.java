@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
@@ -36,6 +37,11 @@ public class CheckoutServiceImpl implements CheckoutService {
                 ? cartRepository.findById(incoming.getCartId())
                 .orElseGet(Cart::new)
                 : new Cart();
+        Date date = new Date();
+        cart.setLast_update(date);
+        cart.setCreate_date(date);
+
+
 
         //create tracking string
         String orderTrackingNumber = UUID.randomUUID().toString();
@@ -50,18 +56,30 @@ public class CheckoutServiceImpl implements CheckoutService {
 
         // check for existing customer :else save new
         Customer incomingCust = purchase.getCustomer();
-        Customer customer = customerRepository
-                .findById(incomingCust.getCustomerId())
+        Customer customer = customerRepository.findById(incomingCust.getCustomerId())
                 .orElseGet(() -> customerRepository.save(incomingCust));
 
-        //add customer to cart and cart to customer
+        //set cart details *won't work without modifying front-end-api post tracking number only
         cart.setCustomer(customer);
+        cart.setParty_size(cart.getParty_size());
+        cart.setStatus(cart.getStatus());
+        cart.setPackage_price(cart.getPackage_price());
+
         customer.getCarts().add(cart);
+
+        PurchaseResponse response = new PurchaseResponse();
+            response.setOrderTrackingNumber(orderTrackingNumber);
+
+
+
+
+
+
 
         //persist car
         cartRepository.save(cart);
 
         //return order number
-        return new PurchaseResponse(orderTrackingNumber);
+        return response;
     }
 }
