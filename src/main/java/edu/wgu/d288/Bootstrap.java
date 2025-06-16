@@ -26,30 +26,20 @@ public class Bootstrap implements CommandLineRunner {
 
     @Autowired
     private DivisionRepository divisionRepo;
-    @Autowired
-    private CountryRepository countryRepository;
+
 
 
     @Override
     public void run(String... args) throws Exception {
         Date date = Date.from(Instant.now());
 
-       /* Country country = countryRepository.findByCountryName("U.S");
 
-        Division division = new Division(null,
-                "Potato Lakes",
-                date,
-                date,
-                country,
-                null);
+        Division division = new Division();
+        division.setId(3L);
+        division.setDivision_name("Goat Boat Moat");
+        divisionRepo.save(division);
 
-        if (divisionRepo.findByDivisionName(division.getDivisionName()).isPresent()){
-            System.out.println("Division already exists");
-        }
-        else {
-            divisionRepo.save(division);
-            country.addDivision(division);
-        }*/
+
 
 
         List<Customer> customers = List.of(
@@ -64,6 +54,7 @@ public class Bootstrap implements CommandLineRunner {
             if (customerRepo.findByPhone(customer.getPhone()).isPresent()) {
                 System.out.println("Customer with phone " + customer.getPhone() + " already exists");
             } else {
+                customer.setDivision(division);
                 customerRepo.save(customer);
                 System.out.println("Saved new customer: " + customer.getFirstName());
             }
