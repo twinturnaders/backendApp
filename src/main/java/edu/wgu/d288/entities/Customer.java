@@ -2,6 +2,7 @@ package edu.wgu.d288.entities;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,9 +39,11 @@ public class Customer {
     @Column(name = "last_update")
     private Date last_update;
 
+    @Min(value = 5)
     @Column(name = "postal_code")
     private String postal_code;
 
+    @Min(value = 10)
     @Column(name = "phone")
     private String phone;
 

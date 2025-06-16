@@ -2,6 +2,7 @@ package edu.wgu.d288.entities;
 
 //
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,9 +27,11 @@ public class Cart {
 
 
 
-
+    @Min(value = 1)
     @Column(name = "package_price")
     private BigDecimal package_price;
+
+    @Min(1)
     @Column(name = "party_size")
     private Integer party_size;
 
