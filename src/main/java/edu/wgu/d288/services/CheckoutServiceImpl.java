@@ -5,10 +5,12 @@ import edu.wgu.d288.dao.CustomerRepository;
 import edu.wgu.d288.entities.Cart;
 import edu.wgu.d288.entities.CartItem;
 import edu.wgu.d288.entities.Customer;
+import edu.wgu.d288.entities.Status;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
@@ -59,16 +61,25 @@ public class CheckoutServiceImpl implements CheckoutService {
         Customer customer = customerRepository.findById(incomingCust.getCustomerId())
                 .orElseGet(() -> customerRepository.save(incomingCust));
 
-        //set cart details *won't work without modifying front-end-api post tracking number only
-        cart.setCustomer(customer);
-        cart.setParty_size(cart.getParty_size());
-        cart.setStatus(cart.getStatus());
-        cart.setPackage_price(cart.getPackage_price());
+
 
         customer.getCarts().add(cart);
+        cart.setCustomer(customer);
 
-        PurchaseResponse response = new PurchaseResponse();
-            response.setOrderTrackingNumber(orderTrackingNumber);
+
+
+        cart.setOrderTrackingNumber(orderTrackingNumber);
+
+        //see if any values are read
+        Integer party_sizeIn  = purchase.getCart().getParty_size();
+        BigDecimal package_priceIn = purchase.getCart().getPackage_price();
+        Status statusIn = purchase.getCart().getStatus();
+
+        //set default values
+        cart.setParty_size(party_sizeIn != null ? party_sizeIn : 1);
+        cart.setPackage_price(package_priceIn != null ? package_priceIn : BigDecimal.ZERO);
+        cart.setStatus(statusIn != null ? statusIn : Status.pending);
+
 
 
 
@@ -80,6 +91,15 @@ public class CheckoutServiceImpl implements CheckoutService {
         cartRepository.save(cart);
 
         //return order number
-        return response;
+        return new PurchaseResponse(
+
+                cart.getOrderTrackingNumber(),
+                cart.getId(),
+                cart.getPackage_price(),
+                cart.getParty_size(),
+                cart.getStatus(),
+                cart.getCreate_date(),
+                cart.getLast_update());
+
     }
 }

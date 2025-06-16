@@ -23,7 +23,7 @@ public class Division {
     private Long id;
 
     @Column(name = "division")
-    private String division_name;
+    private String division;
 
 
     @Column(name = "create_date")

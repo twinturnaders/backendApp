@@ -27,17 +27,25 @@ public class Bootstrap implements CommandLineRunner {
     @Autowired
     private DivisionRepository divisionRepo;
 
+    @Autowired
+    private CountryRepository countryRepo;
 
 
     @Override
     public void run(String... args) throws Exception {
         Date date = Date.from(Instant.now());
 
+        Country country = countryRepo.getReferenceById(1L);
 
-        Division division = new Division();
-        division.setId(3L);
-        division.setDivision_name("Goat Boat Moat");
+
+        Division division = new Division(null,"Twirly Tangerine Town", date, date, country, null);
+
+
+
+
+
         divisionRepo.save(division);
+
 
 
 

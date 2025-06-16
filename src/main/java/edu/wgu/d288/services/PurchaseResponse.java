@@ -4,33 +4,23 @@ package edu.wgu.d288.services;
 import edu.wgu.d288.dao.CartRepository;
 import edu.wgu.d288.entities.Cart;
 import edu.wgu.d288.entities.Status;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.transaction.Transactional;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.util.Date;
-
+@ToString
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class PurchaseResponse {
-    @Autowired
-    CartRepository cartRepository;
-
-    private Cart cart;
     private String orderTrackingNumber;
-
-
-    private Integer party_size;
+    private Long id;
     private BigDecimal package_price;
+    private Integer party_size;
     private Status status;
+    private Date create_date;
     private Date last_update;
-    private Date created_date;
-
-    public PurchaseResponse(String orderTrackingNumber) {
-    }
 }

@@ -10,4 +10,5 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 public interface CountryRepository extends JpaRepository<Country, Long> {
 
 
+
 }
